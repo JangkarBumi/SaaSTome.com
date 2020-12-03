@@ -5,11 +5,13 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className=" sm:flex sm:justify-between sm:px-4 sm:py-3 sm:items-center">
+    <nav className="sm:flex sm:justify-between sm:px-4 sm:py-3 sm:items-center">
       <div className="flex items-center justify-between px-4 py-3 sm:p-0">
-        <img src={Logo} alt="" />
+        <a href="/">
+          <img src={Logo} alt="" />
+        </a>
 
-        <div className="sm:hidden">
+        <div className="sm:hidden ">
           <button
             type="button"
             className="focus:outline-none"
@@ -33,37 +35,40 @@ const Navbar = () => {
       </div>
 
       <div
-        className={'sm:flex px-2 pt-2 pb-4' + (isOpen ? ' block' : ' hidden')}
+        className={
+          'sm:flex px-2 pt-2 pb-4 bg-white sm:bg-grayskull' +
+          (isOpen ? ' block' : ' hidden')
+        }
       >
         <a
           href="/about"
-          className="block px-2 py-1  font-semibold rounded hover:bg-gray-800 sm:mt-0"
+          className="block px-2 py-1  font-semibold rounded  sm:mt-0 hover:underline"
         >
           About
         </a>
         <a
           href="/contact-us"
-          className="mt-1 block px-2 py-1  font-semibold reounded hover:bg-gray-800 sm:mt-0 sm:ml-2"
+          className="mt-1 block px-2 py-1  font-semibold reounded  sm:mt-0 sm:ml-2 hover:underline"
         >
           Pricing
         </a>
         <a
           href="/pricing"
-          className="mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-2"
+          className="mt-1 block px-2 py-1 font-semibold rounded  sm:mt-0 sm:ml-2 hover:underline"
         >
           Blog
         </a>
         <a
           href="/pricing"
-          className="mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-2"
+          className="mt-1 block px-2 py-1 font-semibold rounded sm:border-2  sm:mt-0 sm:ml-2 hover:text-primary hover:underline"
         >
-         Sign In
+          Sign In
         </a>
         <a
           href="/pricing"
-          className="mt-1 block px-2 py-1 font-semibold rounded hover:bg-gray-800 sm:mt-0 sm:ml-2"
+          className="mt-1 mx-auto block px-2 py-1 font-semibold  text-white text-center bg-primary rounded w-3/6 sm:mt-0 sm:ml-2 sm:w-auto"
         >
-         Sign Up
+          Sign Up
         </a>
       </div>
     </nav>
