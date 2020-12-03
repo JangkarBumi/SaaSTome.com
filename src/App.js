@@ -1,9 +1,10 @@
-import Dashboard from './components/Dashboard'
+import Navbar from './components/Navbar';
 
 function App() {
   return (
-    <div>
-      <Dashboard />
+    <div className="bg-grayskull h-screen">
+      <Navbar />
+      {/* <Dashboard /> */}
     </div>
   );
 }
