@@ -3,7 +3,7 @@ import Ilustration from '../assets/images/Ilustration.jpg';
 
 const Hero = () => {
   return (
-    <div className="flex flex-col sm:flex-row">
+    <div className="flex flex-col sm:flex-row sm:justify-between">
       <div className="text-center mt-6">
         <h1 className="font-bold text-2xl"> Find your next SaaS ideas</h1>
         <p className="mt-6">
