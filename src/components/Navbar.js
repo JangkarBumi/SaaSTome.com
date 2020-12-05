@@ -5,10 +5,10 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sm:flex sm:justify-between sm:px-4 sm:py-3 sm:items-center">
-      <div className="flex items-center justify-between px-4 py-3 sm:p-0">
+    <nav className="sm:flex sm:justify-between  sm:py-3 sm:items-center">
+      <div className="flex items-center justify-between p-0 sm:px-4 py-8 sm:p-0">
         <a href="/">
-          <img src={Logo} alt="" />
+          <img className="h-9" src={Logo} alt="" />
         </a>
 
         <div className="sm:hidden ">
