@@ -5,7 +5,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="sm:flex sm:justify-between  sm:py-3 sm:items-center">
+    <nav className="sm:flex sm:justify-between  sm:py-3 sm:items-center px-6">
       <div className="flex items-center justify-between p-0 sm:px-4 py-8 sm:p-0">
         <a href="/">
           <img className="h-9" src={Logo} alt="" />
@@ -17,7 +17,7 @@ const Navbar = () => {
             className="focus:outline-none"
             onClick={() => setIsOpen(!isOpen)}
           >
-            <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
+            <svg className="h-9 fill-current" viewBox="0 0 24 24">
               {isOpen ? (
                 <path
                   fillRule="evenodd"

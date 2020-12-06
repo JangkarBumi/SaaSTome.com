@@ -6,6 +6,7 @@ module.exports = {
       ...theme('colors'),
       grayskull: '#F3F6F9',
       primary: '#4070F4',
+      blackpearl: '#1E272C',
     }),
     extend: {},
   },
