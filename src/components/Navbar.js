@@ -36,8 +36,7 @@ const Navbar = () => {
 
       <div
         className={
-          'sm:flex px-2 pt-2 pb-4 bg-white sm:bg-grayskull' +
-          (isOpen ? ' block' : ' hidden')
+          'sm:flex px-2 pt-2 pb-4 bg-white' + (isOpen ? ' block' : ' hidden')
         }
       >
         <a
