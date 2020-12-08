@@ -5,6 +5,7 @@ import Product from './Product';
 const Dashboard = () => {
   const [saas, setSaas] = useState([]);
   const [queryLimit, setQueryLimit] = useState(6);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getData = async () => {
@@ -20,10 +21,13 @@ const Dashboard = () => {
           holder.push({ id: doc.id, title, tagline });
         });
         setSaas(holder);
+        setLoading(false);
       } catch (error) {}
     };
     getData();
   }, [queryLimit]);
+
+
 
   return (
     <div>
