@@ -106,56 +106,61 @@ const ProductList = () => {
       </button>
 
       <div className={showFilter ? 'block' : 'hidden'}>
+        <h3 className="font-bold color-primary">Pricing</h3>
         <div className="flex">
           <input
             className="mt-1 mr-2"
             type="radio"
             value={'all'}
-            checked={priceFilter == 'all'}
-            // onChange={onChange}
+            checked={priceFilter === 'all'}
+            onChange={(e) => setPriceFilter(e.target.value)}
           />
           <p>All</p>
         </div>
 
-        <button
-          onClick={() => {
-            setPriceFilter('all');
-          }}
-        >
-          All
-        </button>
+        <div className="flex">
+          <input
+            className="mt-1 mr-2"
+            type="radio"
+            value={'free'}
+            checked={priceFilter === 'free'}
+            onChange={(e) => setPriceFilter(e.target.value)}
+          />
+          <p>Free</p>
+        </div>
 
-        <button
-          onClick={() => {
-            setPriceFilter('free');
-          }}
-        >
-          Free
-        </button>
+        <div className="flex">
+          <input
+            className="mt-1 mr-2"
+            type="radio"
+            value={(0, 25)}
+            checked={priceFilter[1] === 25} // temporary soliton because priceFilter == [0,25] is false
+            onChange={(e) => setPriceFilter([0, 25])}
+          />
+          <p>$0 - $25</p>
+        </div>
 
-        <button
-          onClick={() => {
-            setPriceFilter([0, 25]);
-          }}
-        >
-          $ 0 - 25
-        </button>
+        <div className="flex">
+          <input
+            className="mt-1 mr-2"
+            type="radio"
+            value={[25, 50]}
+            checked={priceFilter[1] === 50}
+            onChange={(e) => setPriceFilter([25, 50])}
+          />
+          <p>$25 - $50</p>
+        </div>
 
-        <button
-          onClick={() => {
-            setPriceFilter([25, 50]);
-          }}
-        >
-          $ 25 - 50
-        </button>
-
-        <button
-          onClick={() => {
-            setPriceFilter([50, 1000]);
-          }}
-        >
-          $ 50+
-        </button>
+        <div className="flex">
+          <input
+            className="mt-1 mr-2"
+            type="radio"
+            value={[50, 1000]}
+            checked={priceFilter[1] === 1000}
+            onChange={(e) => setPriceFilter([50, 1000])}
+          />
+          <p>$50+</p>
+        </div>
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:gap-x-20">
