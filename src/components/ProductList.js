@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { db } from '../firebase';
 import Product from './Product';
@@ -69,6 +69,13 @@ const ProductList = () => {
     setSaasList(data);
   };
 
+  // Infinite scroll
+  const observer = useRef(
+    new IntersectionObserver(() => {}, { threshold: 1 }), // threshold 1 meaning the element need to be 100% visible before this event triggered
+  );
+
+  const [element, setElement] = useState(null);
+
   // Display Skeleton Screen while loading
   if (loading)
     return (
@@ -99,7 +106,7 @@ const ProductList = () => {
   return (
     <div className="py-6">
       <button
-        onClick={() => setShowFilter(true)}
+        onClick={() => setShowFilter(!showFilter)}
         className="font-bold text-lg bg-white px-6 py-2 rounded border"
       >
         Filter
@@ -164,18 +171,16 @@ const ProductList = () => {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:gap-x-20">
-        {saasList.map((product) => {
-          return (
-            <Product
-              key={product.title}
-              title={product.title}
-              link={product.link}
-              tagline={product.tagline}
-              pricing={product.pricing}
-              category={product.category}
-            />
-          );
-        })}
+        {saasList.map((product) => (
+          <Product
+            key={product.id}
+            title={product.title}
+            link={product.link}
+            tagline={product.tagline}
+            pricing={product.pricing}
+            category={product.category}
+          />
+        ))}
       </div>
       <button
         onClick={() => setQueryLimit(queryLimit + 3)}
