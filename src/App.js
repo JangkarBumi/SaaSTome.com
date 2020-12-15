@@ -1,19 +1,17 @@
-import Footer from './components/Footer';
-import Hero from './components/Hero';
-import Navbar from './components/Navbar';
-import ProductList from './components/ProductList';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Dashboard from './components/Dashboard';
+import LandingPage from './components/Landing/LandingPage';
 
 function App() {
   return (
-    <div className="bg-grayskull h-full ">
-      <Navbar />
-      <section className="px-10">
-        <Hero />
-        <ProductList />
-      </section>
-      <Footer />
-      {/* <Dashboard /> */}
-    </div>
+    <Router>
+      <div className="bg-grayskull h-full ">
+        <Switch>
+          <Route exact path="/" component={LandingPage} />
+          <Route exact path="/dashboard" component={Dashboard} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 
