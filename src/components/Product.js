@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Product = ({ title, link, tagline, pricing, category }) => {
+const Product = ({ title, link, tagline, pricing, category, }) => {
   return (
     <div className="relative bg-white mt-6 px-4 py-4 rounded border">
       <button className="absolute  top-0 right-0 bg-primary px-2 py-1 rounded text-white">

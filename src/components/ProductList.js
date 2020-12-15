@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import { db } from '../firebase';
 import Product from './Product';
@@ -8,6 +8,7 @@ const ProductList = () => {
   const [queryLimit, setQueryLimit] = useState(6);
   const [loading, setLoading] = useState(true);
   const [showFilter, setShowFilter] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
 
   // Initial fetch and load more
   useEffect(() => {
@@ -21,11 +22,23 @@ const ProductList = () => {
         let holder = [];
         res.forEach((doc) => {
           const { title, tagline, pricing, category } = doc.data();
-          holder.push({ id: doc.id, title, tagline, pricing, category });
+
+          holder.push({
+            id: doc.id,
+            title,
+            tagline,
+            pricing,
+            category,
+          });
         });
+
         setSaasList(holder);
+
+        setHasMore(holder.length > saasList.length);
         setLoading(false);
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
     };
     getData();
   }, [queryLimit]);
@@ -35,6 +48,7 @@ const ProductList = () => {
 
   useEffect(() => {
     filterSaaS();
+    console.log('filter ran');
   }, [priceFilter]);
 
   const filterSaaS = async () => {
@@ -63,7 +77,15 @@ const ProductList = () => {
 
     const data = [];
     snapshot.forEach((doc) => {
-      data.push(doc.data());
+      const { title, tagline, pricing, category } = doc.data();
+
+      data.push({
+        id: doc.id,
+        title,
+        tagline,
+        pricing,
+        category,
+      });
     });
 
     setSaasList(data);
@@ -74,7 +96,20 @@ const ProductList = () => {
     new IntersectionObserver(() => {}, { threshold: 1 }), // threshold 1 meaning the element need to be 100% visible before this event triggered
   );
 
-  const [element, setElement] = useState(null);
+  const lastSaasElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setQueryLimit((prevQueryLimit) => prevQueryLimit + 3);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, hasMore],
+  );
 
   // Display Skeleton Screen while loading
   if (loading)
@@ -141,7 +176,7 @@ const ProductList = () => {
             className="mt-1 mr-2"
             type="radio"
             value={(0, 25)}
-            checked={priceFilter[1] === 25} // temporary soliton because priceFilter == [0,25] is false
+            checked={priceFilter[1] === 25} // temporary solution because priceFilter == [0,25] is false
             onChange={(e) => setPriceFilter([0, 25])}
           />
           <p>$0 - $25</p>
@@ -171,23 +206,42 @@ const ProductList = () => {
       </div>
 
       <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:gap-x-20">
-        {saasList.map((product) => (
-          <Product
-            key={product.id}
-            title={product.title}
-            link={product.link}
-            tagline={product.tagline}
-            pricing={product.pricing}
-            category={product.category}
-          />
-        ))}
+        {saasList.map((product, index) => {
+          if (saasList.length === index + 1) {
+            return (
+              <div ref={lastSaasElementRef} key={product.id}>
+                <Product
+                  title={product.title}
+                  link={product.link}
+                  tagline={product.tagline}
+                  pricing={product.pricing}
+                  category={product.category}
+                />
+              </div>
+            );
+          } else {
+            return (
+              <div key={product.id}>
+                <Product
+                  title={product.title}
+                  link={product.link}
+                  tagline={product.tagline}
+                  pricing={product.pricing}
+                  category={product.category}
+                />
+              </div>
+            );
+          }
+        })}
       </div>
-      <button
-        onClick={() => setQueryLimit(queryLimit + 3)}
-        className="focus:outline-none font-bold text-lg bg-white px-6 py-2 rounded border mt-6"
-      >
-        Load More
-      </button>
+      {hasMore ? (
+        <button
+          onClick={() => setQueryLimit((prevQueryLimit) => prevQueryLimit + 3)}
+          className="focus:outline-none font-bold text-lg bg-white px-6 py-2 rounded border mt-6"
+        >
+          Load More
+        </button>
+      ) : null}
     </div>
   );
 };
