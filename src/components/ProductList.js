@@ -55,11 +55,17 @@ const ProductList = () => {
     let query = db.collection('saas');
 
     if (priceFilter === 'all') {
-      query = db.collection('saas').limit(6);
+      query = db
+        .collection('saas')
+
+        .limit(queryLimit);
     }
 
     if (priceFilter === 'free') {
-      query = db.collection('saas').where('pricing', '>=', 'Free').limit(6);
+      query = db
+        .collection('saas')
+        .where('pricing', '>=', 'Free')
+        .limit(queryLimit);
     }
 
     if (Array.isArray(priceFilter)) {
@@ -130,8 +136,8 @@ const ProductList = () => {
           ))}
         </div>
         <button
-          onClick={() => setQueryLimit(queryLimit + 3)}
-          className="px-2 py-1 rounded bg-primary text-white"
+          onClick={() => setQueryLimit((prevQueryLimit) => prevQueryLimit + 3)}
+          // className="px-2 py-1 rounded bg-primary text-white"
         >
           Load More
         </button>
