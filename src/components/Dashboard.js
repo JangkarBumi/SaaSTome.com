@@ -27,8 +27,6 @@ const Dashboard = () => {
     getData();
   }, [queryLimit]);
 
-
-
   return (
     <div>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:gap-x-20">
