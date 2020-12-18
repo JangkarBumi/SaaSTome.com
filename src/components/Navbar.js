@@ -59,7 +59,7 @@ const Navbar = () => {
           Blog
         </a>
         <a
-          href="/pricing"
+          href="/login"
           className="mt-1 block px-2 py-1 font-semibold rounded sm:border-2  sm:mt-0 sm:ml-2 hover:text-primary hover:underline"
         >
           Sign In
