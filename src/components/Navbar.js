@@ -65,7 +65,7 @@ const Navbar = () => {
           Sign In
         </a>
         <a
-          href="/pricing"
+          href="/signup"
           className="mt-1 mx-auto block px-2 py-1 font-semibold  text-white text-center bg-primary rounded w-3/6 sm:mt-0 sm:ml-2 sm:w-auto"
         >
           Sign Up
