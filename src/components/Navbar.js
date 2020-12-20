@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Logo from '../assets/images/Logo.svg';
 import { logout, selectUser } from '../features/userSlice';
 import { auth } from '../firebase';
@@ -69,7 +70,10 @@ const Navbar = () => {
           Blog
         </a>
         {user.user ? (
-          <button onClick={handleLogout}>Logout</button>
+          <>
+            <Link to="/dashboard">Dashboard</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
         ) : (
           <>
             <a
