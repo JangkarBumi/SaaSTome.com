@@ -13,7 +13,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((userAuth) => {
+    auth.onAuthStateChanged((userAuth) => {
       if (userAuth) {
         dispatch(
           login({
