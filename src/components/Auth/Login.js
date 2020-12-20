@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 import Ilustration from '../../assets/images/Ilustration.jpg';
 import Logo from '../../assets/images/Logo.svg';
+import { login, selectUser } from '../../features/userSlice';
+import { auth } from '../../firebase';
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -10,6 +13,8 @@ const Login = () => {
   });
 
   const { email, password } = formData;
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
 
   const onChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -17,9 +22,19 @@ const Login = () => {
   const onSubmit = async (e) => {
     e.preventDefault();
 
-    // login(email, password);
-    console.log(email, password);
+    auth.signInWithEmailAndPassword(email, password).then((userAuth) => {
+      dispatch(
+        login({
+          email: userAuth.user.email,
+          uid: userAuth.user.uid,
+        }),
+      );
+    });
   };
+
+  if (user.user) {
+    return <Redirect to="/dashboard" />;
+  }
 
   return (
     <div className="flex h-screen">
