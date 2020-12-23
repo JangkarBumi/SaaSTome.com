@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { db } from '../firebase';
+import Navbar from './Navbar';
 import Product from './Product';
 
 const Dashboard = () => {
@@ -29,6 +30,7 @@ const Dashboard = () => {
 
   return (
     <div>
+      <Navbar />
       <div className="grid md:grid-cols-2 lg:grid-cols-3 sm:gap-x-20">
         {saas.map((e) => {
           return <Product key={e.id} title={e.title} tagline={e.tagline} />;

@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Logo from '../assets/images/Logo.svg';
+import { logout, selectUser } from '../features/userSlice';
+import { auth } from '../firebase';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    auth.signOut();
+  };
 
   return (
     <nav className="sm:flex sm:justify-between  sm:py-3 sm:items-center px-6">
@@ -58,18 +69,27 @@ const Navbar = () => {
         >
           Blog
         </a>
-        <a
-          href="/pricing"
-          className="mt-1 block px-2 py-1 font-semibold rounded sm:border-2  sm:mt-0 sm:ml-2 hover:text-primary hover:underline"
-        >
-          Sign In
-        </a>
-        <a
-          href="/pricing"
-          className="mt-1 mx-auto block px-2 py-1 font-semibold  text-white text-center bg-primary rounded w-3/6 sm:mt-0 sm:ml-2 sm:w-auto"
-        >
-          Sign Up
-        </a>
+        {user.user ? (
+          <>
+            <Link to="/dashboard">Dashboard</Link>
+            <button onClick={handleLogout}>Logout</button>
+          </>
+        ) : (
+          <>
+            <a
+              href="/login"
+              className="mt-1 block px-2 py-1 font-semibold rounded sm:border-2  sm:mt-0 sm:ml-2 hover:text-primary hover:underline"
+            >
+              Sign In
+            </a>
+            <a
+              href="/signup"
+              className="mt-1 mx-auto block px-2 py-1 font-semibold  text-white text-center bg-primary rounded w-3/6 sm:mt-0 sm:ml-2 sm:w-auto"
+            >
+              Sign Up
+            </a>
+          </>
+        )}
       </div>
     </nav>
   );
