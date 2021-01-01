@@ -22,15 +22,20 @@ const Login = () => {
 
   const onSubmit = async (e) => {
     e.preventDefault();
-
-    auth.signInWithEmailAndPassword(email, password).then((userAuth) => {
+    
+    try {
+      const userAuth = await auth.signInWithEmailAndPassword(email, password);
       dispatch(
         login({
           email: userAuth.user.email,
           uid: userAuth.user.uid,
         }),
       );
-    });
+
+      console.log('DDD');
+    } catch (error) {
+      console.log('DRAGIB',error.message);
+    }
   };
 
   if (user.user) {
